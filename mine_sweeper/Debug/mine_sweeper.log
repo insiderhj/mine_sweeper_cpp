@@ -1,0 +1,4 @@
+﻿  mine_sweeper_screen.cpp
+c:\users\김희진\desktop\workspace\2018_2\플젝\mine_sweeper\mine_sweeper\mine_sweeper_screen.cpp(7): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\김희진\desktop\workspace\2018_2\플젝\mine_sweeper\mine_sweeper\mine_sweeper_screen.cpp(55): warning C4101: 'input' :참조되지 않은 지역 변수입니다.
+  mine_sweeper.vcxproj -> C:\Users\김희진\Desktop\workspace\2018_2\플젝\mine_sweeper\mine_sweeper\Debug\mine_sweeper.exe
