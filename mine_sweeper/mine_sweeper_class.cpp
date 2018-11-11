@@ -3,11 +3,6 @@
 using namespace std;
 
 template<typename T>
-Map<T>::Map() {
-	_map = NULL, _width = 0, _height = 0;
-}
-
-template<typename T>
 Map<T>::Map(int width, int height) {
 	_width = width, _height = height;
 
@@ -25,22 +20,9 @@ Map<T>::~Map() {
 	delete[] _map;
 }
 
-template<typename T>
-int Map<T>::getWidth() const {
-	return _width;
-}
-
-template<typename T>
-int Map<T>::getHeight() const {
-	return _height;
-}
-
 /*
  * class MineMap : public Map<bool>
  */
-MineMap::MineMap() {
-	mine_count = 0;
-}
 
 MineMap::MineMap(int width, int height, int mine) : Map(width, height) {
 	mine_count = mine;
@@ -62,8 +44,6 @@ MineMap::MineMap(int width, int height, int mine) : Map(width, height) {
 	}
 }
 
-MineMap::~MineMap() {}
-
 void MineMap::moveMine(int x, int y) {
 	_map[y][x] = false;
 
@@ -81,14 +61,6 @@ void MineMap::moveMine(int x, int y) {
 	}
 }
 
-int MineMap::getMineCount() const {
-	return mine_count;
-}
-
-bool MineMap::isMine(int x, int y) const {
-	return _map[y][x];
-}
-
 /*
  * class NumberMap : public Map<int>
  */
@@ -104,8 +76,6 @@ int NumberMap::getMineCount(int x, int y, MineMap* mine_map) const {
 	return mine_count;
 }
 
-NumberMap::NumberMap() {}
-
 NumberMap::NumberMap(MineMap* mine_map) : Map(mine_map->getWidth(), mine_map->getHeight()) {
 	for (int i = 0; i < _height; ++i) {
 		for (int j = 0; j < _width; ++j) {
@@ -115,16 +85,9 @@ NumberMap::NumberMap(MineMap* mine_map) : Map(mine_map->getWidth(), mine_map->ge
 	}
 }
 
-NumberMap::~NumberMap() {}
-
-int NumberMap::getxy(int x, int y) const {
-	return _map[y][x];
-}
-
 /*
  * class StatusMap : public Map<char>
  */
-StatusMap::StatusMap() {}
 
 StatusMap::StatusMap(NumberMap* number_map) : Map(number_map->getWidth(), number_map->getHeight()) {
 	for (int i = 0; i < _height; ++i) {
@@ -132,16 +95,6 @@ StatusMap::StatusMap(NumberMap* number_map) : Map(number_map->getWidth(), number
 			_map[i][j] = '.';
 		}
 	}
-}
-
-StatusMap::~StatusMap() {}
-
-char StatusMap::getxy(int x, int y) const {
-	return _map[y][x];
-}
-
-void StatusMap::setxy(int x, int y, char input) {
-	_map[y][x] = input;
 }
 
 string StatusMap::getInfo() const {
@@ -197,10 +150,6 @@ void MineSweeper::seek(int x, int y) {
 			}
 		}
 	}
-}
-
-MineSweeper::MineSweeper() {
-	mine_map = NULL, number_map = NULL, status_map = NULL, _width = 0, _height = 0, found_number = 0, found_mine = 0, is_alive = false, win = false;
 }
 
 MineSweeper::MineSweeper(int width, int height, int mine) {
@@ -284,28 +233,4 @@ void MineSweeper::inputX(int x, int y) {
 
 	gotoxy(ROW_MARGIN + x * 2, COL_MARGIN + y);;
 	cout << status_map->getxy(x, y);
-}
-
-char MineSweeper::getxy(int x, int y) const {
-	return status_map->getxy(x, y);
-}
-
-int MineSweeper::getRemainMine() const {
-	return mine_map->getMineCount() - found_mine;
-}
-
-bool MineSweeper::isMine(int x, int y) const {
-	return mine_map->isMine(x, y);
-}
-
-bool MineSweeper::isAlive() const {
-	return is_alive;
-}
-
-bool MineSweeper::hasWon() const {
-	return win;
-}
-
-void MineSweeper::showMap() const {
-	cout << status_map->getInfo() << endl;
 }

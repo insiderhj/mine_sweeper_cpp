@@ -22,12 +22,12 @@ protected:
 	int _height;
 
 public:
-	Map(void);
+	Map(void) : _map(NULL), _width(0), _height(0) {}
 	Map(int, int);
 	~Map(void);
 
-	int getWidth(void) const;
-	int getHeight(void) const;
+	int getWidth(void) const { return _width; }
+	int getHeight(void) const { return _height; }
 };
 
 class MineMap : public Map<bool>
@@ -35,13 +35,13 @@ class MineMap : public Map<bool>
 private:
 	int mine_count;
 public:
-	MineMap();
+	MineMap(void) : mine_count(0) {}
 	MineMap(int, int, int);
-	~MineMap();
+	~MineMap(void) {}
 
 	void moveMine(int, int);
-	int getMineCount(void) const;
-	bool isMine(int, int) const;
+	int getMineCount(void) const { return mine_count; }
+	bool isMine(int x, int y) const { return _map[y][x]; }
 };
 
 class NumberMap : public Map<int>
@@ -49,22 +49,22 @@ class NumberMap : public Map<int>
 private:
 	int getMineCount(int, int, MineMap*) const;
 public:
-	NumberMap(void);
+	NumberMap(void) {}
 	NumberMap(MineMap*);
-	~NumberMap(void);
+	~NumberMap(void) {}
 
-	int getxy(int, int) const;
+	int getxy(int, int) const { return _map[y][x]; }
 };
 
 class StatusMap : public Map<char>
 {
 public:
-	StatusMap(void);
+	StatusMap(void) {}
 	StatusMap(NumberMap*);
-	~StatusMap(void);
+	~StatusMap(void) {}
 
-	char getxy(int, int) const;
-	void setxy(int, int, char);
+	char getxy(int x, int y) const { return _map[y][x]; }
+	void setxy(int x, int y, char input) { _map[y][x] = input; }
 	std::string getInfo(void) const;
 };
 
@@ -80,18 +80,19 @@ private:
 
 	void seek(int, int);
 public:
-	MineSweeper(void);
+	MineSweeper(void) : mine_map(NULL), number_map(NULL), status_map(NULL), _width(0), _height(0), is_alive(false), win(false), found_number(0), found_mine(0) {}
 	MineSweeper(int, int, int);
 	~MineSweeper(void);
 
 	void moveMine(int, int);
 	void inputZ(int, int);
 	void inputX(int, int);
-	char getxy(int, int) const;
-	int getRemainMine(void) const;
-	bool isMine(int, int) const;
-	bool isAlive(void) const;
-	bool hasWon(void) const;
+	
+	char getxy(int x, int y) const { return status_map->getxy(x, y); }
+	int getRemainMine(void) const { return mine_map->getMineCount() - found_mine; }
+	bool isMine(int x, int y) const { return mine_map->isMine(x, y); }
+	bool isAlive(void) const { return is_alive; }
+	bool hasWon(void) const { return win; }
 
 	void showMap(void) const;
 };
