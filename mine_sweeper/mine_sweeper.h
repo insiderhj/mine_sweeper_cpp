@@ -53,7 +53,7 @@ public:
 	NumberMap(MineMap*);
 	~NumberMap(void) {}
 
-	int getxy(int, int) const { return _map[y][x]; }
+	int getxy(int x, int y) const { return _map[y][x]; }
 };
 
 class StatusMap : public Map<char>
@@ -94,7 +94,7 @@ public:
 	bool isAlive(void) const { return is_alive; }
 	bool hasWon(void) const { return win; }
 
-	void showMap(void) const;
+	void showMap(void) const { std::cout << status_map->getInfo(); }
 };
 
 

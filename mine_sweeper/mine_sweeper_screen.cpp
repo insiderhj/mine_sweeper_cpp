@@ -79,14 +79,21 @@ int* setDifficulty() {
 		system("CLS");
 		gotoxy(0, 0);
 		while (true) {
+			string map_option[3];
+			bool is_all_int = true;
 			cout << "width(1 ~ 50): ";
-			cin >> result[0];
+			cin >> map_option[0];
 			cout << "height(1 ~ 30): ";
-			cin >> result[1];
+			cin >> map_option[1];
 			cout << "mine: ";
-			cin >> result[2];
+			cin >> map_option[2];
 
-			if (result[0] * result[1] < result[2] || result[0] < 1 || result[0] > 50 || result[1] < 1 || result[1] > 30) {
+			for (int i = 0; i < 3; i++) {
+				result[i] = atoi(map_option[i].c_str());
+				if (to_string(result[i]) != map_option[i]) is_all_int = false;
+			}
+
+			if (result[0] * result[1] < result[2] || result[0] < 1 || result[0] > 50 || result[1] < 1 || result[1] > 30 || !is_all_int) {
 				system("CLS");
 				gotoxy(0, 0);
 				cout << "jang nan ha ni?" << endl;
