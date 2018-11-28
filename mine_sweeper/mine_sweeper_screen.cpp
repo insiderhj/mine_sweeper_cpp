@@ -93,7 +93,7 @@ int* setDifficulty() {
 				if (to_string(result[i]) != map_option[i]) is_all_int = false;
 			}
 
-			if (result[0] * result[1] <= result[2] || result[0] < 1 || result[0] > 50 || result[1] < 1 || result[1] > 30 || !is_all_int) {
+			if (result[2] >= result[0] * result[0] - 9 || result[0] < 1 || result[0] > 50 || result[1] < 1 || result[1] > 30 || !is_all_int) {
 				system("CLS");
 				gotoxy(0, 0);
 				cout << "jang nan ha ni?" << endl;

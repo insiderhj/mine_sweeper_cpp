@@ -45,18 +45,21 @@ MineMap::MineMap(int width, int height, int mine) : Map(width, height) {
 }
 
 void MineMap::moveMine(int x, int y) {
-	_map[y][x] = false;
+	for (int i = y - 1, j = x - 1; i <= y + 1; j++, i += j == x + 2, j -= 3 * (j == x + 2)) {
+		if (i < 0 || i >= _height || j < 0 || j >= _width) continue;
+		if (!_map[i][j]) continue;
+		_map[i][j] = false;
+		int curr_x, curr_y;
+		while (true)
+		{
+			curr_x = rand() % _width;
+			curr_y = rand() % _height;
 
-	int curr_x, curr_y;
-	while (true)
-	{
-		curr_x = rand() % _width;
-		curr_y = rand() % _height;
-
-		if (curr_x == x && curr_y == y) continue;
-		if (!_map[curr_y][curr_x]) {
-			_map[curr_y][curr_x] = true;
-			break;
+			if (curr_x >= x - 1 && curr_x <= x + 1 && curr_y >= y - 1 && curr_y <= y + 1) continue;
+			if (!_map[curr_y][curr_x]) {
+				_map[curr_y][curr_x] = true;
+				break;
+			}
 		}
 	}
 }

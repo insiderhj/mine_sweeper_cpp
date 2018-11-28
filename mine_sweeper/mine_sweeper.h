@@ -89,6 +89,7 @@ public:
 	void inputX(int, int);
 	
 	char getxy(int x, int y) const { return status_map->getxy(x, y); }
+	int getnum(int x, int y) const { return number_map->getxy(x, y); }
 	int getRemainMine(void) const { return mine_map->getMineCount() - found_mine; }
 	bool isMine(int x, int y) const { return mine_map->isMine(x, y); }
 	bool isAlive(void) const { return is_alive; }

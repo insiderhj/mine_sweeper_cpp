@@ -45,7 +45,7 @@ int main() {
 			case 122:
 				if (first_turn && mine_sweeper.getxy(xpos, ypos) == '.') {
 					first_turn = false;
-					if (mine_sweeper.isMine(xpos, ypos)) mine_sweeper.moveMine(xpos, ypos);
+					if (mine_sweeper.getnum(xpos, ypos) != 0) mine_sweeper.moveMine(xpos, ypos);
 				}
 				mine_sweeper.inputZ(xpos, ypos);
 				break;
